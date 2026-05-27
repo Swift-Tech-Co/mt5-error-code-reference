@@ -59,6 +59,68 @@ footer a{color:#D4A843}
 code{font-family:"JetBrains Mono",monospace;font-size:11px;background:rgba(255,255,255,0.07);padding:1px 6px;border-radius:4px;color:rgba(255,255,255,0.7)}
 .count{font-size:12px;color:rgba(255,255,255,0.35);margin-bottom:16px}
 </style>
+
+    <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Swift Tech Co.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@SwiftTechCo">
+  <meta name="twitter:title" content="MT5 Error Code Reference">
+  <meta name="twitter:description" content="Fix MetaTrader 5 errors: error 130 invalid stops, error 4756, ERR_TRADE_SEND_FAILED, and EA not trading.">
+  <meta name="author" content="Swift Tech Co.">
+  <meta name="robots" content="index, follow">
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "MT5 Error Code Reference",
+  "description": "MetaTrader 5 error code reference with causes and fixes for MQL5 trading errors, order rejection codes, and Expert Advisor errors.",
+  "url": "https://swift-tech-co.github.io/mt5-error-code-reference/",
+  "author": {
+    "@type": "Organization",
+    "name": "Swift Tech Co.",
+    "url": "https://swifttechco.com"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Swift Tech Co.",
+    "url": "https://swifttechco.com"
+  },
+  "datePublished": "2026-05-26",
+  "dateModified": "2026-05-27"
+}
+  </script>
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is MT5 error 130 invalid stops?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "ERR_INVALID_STOPS means your stop loss or take profit is too close to the current price. Fix: check SymbolInfoInteger(Symbol(), SYMBOL_TRADE_STOPS_LEVEL) to get the minimum stop distance in points and set your SL/TP at least that many points away plus spread."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What does MT5 error 4756 mean?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "ERR_TRADE_SEND_FAILED means the trade request failed to send. Common causes: broker server disconnection, account restricted, trading disabled for the symbol, or market closed. Check TerminalInfoInteger(TERMINAL_CONNECTED) and SymbolInfoInteger(Symbol(), SYMBOL_TRADE_MODE)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why is my MT5 Expert Advisor not trading?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Common reasons: (1) AutoTrading button is off in MetaTrader, (2) EA not attached to correct chart, (3) DLL imports not allowed in settings, (4) account restricted to manual trading, (5) logic condition never triggering - add Print() debug statements, (6) SYMBOL_TRADE_MODE is not SYMBOL_TRADE_MODE_FULL."
+      }
+    }
+  ]
+}
+  </script>
 </head>
 <body>
 
@@ -729,6 +791,23 @@ code{font-family:"JetBrains Mono",monospace;font-size:11px;background:rgba(255,2
 </div>
 
 
+
+<section style="max-width:760px;margin:0 auto 48px;padding:0 24px">
+  <h2 style="font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:#fff;margin-bottom:4px;padding-bottom:16px;border-bottom:1px solid rgba(212,168,67,0.2)">Frequently Asked Questions</h2>
+  
+    <div style="border-bottom:1px solid rgba(255,255,255,0.06);padding:20px 0">
+      <h3 style="font-family:'Playfair Display',serif;font-size:17px;color:#fff;margin-bottom:10px">What is MT5 error 130 invalid stops?</h3>
+      <p style="font-size:14px;color:#a8a8b3;line-height:1.8">ERR_INVALID_STOPS means your stop loss or take profit is too close to the current price. Fix: check SymbolInfoInteger(Symbol(), SYMBOL_TRADE_STOPS_LEVEL) to get the minimum stop distance in points and set your SL/TP at least that many points away plus spread.</p>
+    </div>
+    <div style="border-bottom:1px solid rgba(255,255,255,0.06);padding:20px 0">
+      <h3 style="font-family:'Playfair Display',serif;font-size:17px;color:#fff;margin-bottom:10px">What does MT5 error 4756 mean?</h3>
+      <p style="font-size:14px;color:#a8a8b3;line-height:1.8">ERR_TRADE_SEND_FAILED means the trade request failed to send. Common causes: broker server disconnection, account restricted, trading disabled for the symbol, or market closed. Check TerminalInfoInteger(TERMINAL_CONNECTED) and SymbolInfoInteger(Symbol(), SYMBOL_TRADE_MODE).</p>
+    </div>
+    <div style="border-bottom:1px solid rgba(255,255,255,0.06);padding:20px 0">
+      <h3 style="font-family:'Playfair Display',serif;font-size:17px;color:#fff;margin-bottom:10px">Why is my MT5 Expert Advisor not trading?</h3>
+      <p style="font-size:14px;color:#a8a8b3;line-height:1.8">Common reasons: (1) AutoTrading button is off in MetaTrader, (2) EA not attached to correct chart, (3) DLL imports not allowed in settings, (4) account restricted to manual trading, (5) logic condition never triggering - add Print() debug statements, (6) SYMBOL_TRADE_MODE is not SYMBOL_TRADE_MODE_FULL.</p>
+    </div>
+</section>
 <footer>
   <p>This page is the open-source data backing the full comparison article.</p>
   <p style="margin-top:8px">
