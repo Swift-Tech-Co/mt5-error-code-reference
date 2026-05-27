@@ -1,0 +1,763 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MetaTrader 5 Error Code Reference</title>
+<meta name="description" content="Structured reference of MT5/MQL5 trade return codes, runtime errors, and fixes for algorithmic trading systems.">
+<meta property="og:title" content="MetaTrader 5 Error Code Reference">
+<meta property="og:description" content="Structured reference of MT5/MQL5 trade return codes, runtime errors, and fixes for algorithmic trading systems.">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://swifttechco.com/services/finance/trading-platform">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:#0d0d1a;color:#e2e8f0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.6;min-height:100vh}
+a{color:#D4A843;text-decoration:none}a:hover{text-decoration:underline}
+img{max-width:100%}
+nav{position:fixed;top:0;left:0;right:0;z-index:99;background:rgba(13,13,26,0.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(212,168,67,0.15);height:60px;display:flex;align-items:center;padding:0 24px;gap:20px}
+nav .logo{font-weight:800;font-size:15px;color:#fff;white-space:nowrap}
+nav .logo span{color:#D4A843}
+nav .spacer{flex:1}
+nav a.nav-link{font-size:13px;color:rgba(255,255,255,0.6);font-weight:600}
+nav a.nav-link:hover{color:#fff;text-decoration:none}
+nav a.cta-btn{font-size:12px;font-weight:700;padding:7px 18px;border-radius:8px;background:#D4A843;color:#000;white-space:nowrap}
+nav a.cta-btn:hover{text-decoration:none;opacity:0.9}
+.hero{padding:100px 24px 56px;max-width:900px;margin:0 auto;text-align:center}
+.hero .badge{display:inline-flex;align-items:center;gap:8px;background:rgba(212,168,67,0.12);border:1px solid rgba(212,168,67,0.3);border-radius:100px;padding:5px 16px;margin-bottom:24px;font-size:11px;font-weight:700;color:#D4A843;letter-spacing:0.12em;text-transform:uppercase}
+.hero h1{font-size:clamp(26px,5vw,46px);font-weight:900;color:#fff;line-height:1.1;margin-bottom:16px;letter-spacing:-0.02em}
+.hero .sub{font-size:16px;color:rgba(255,255,255,0.55);max-width:600px;margin:0 auto 32px;line-height:1.7}
+.hero .actions{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.btn-primary{display:inline-flex;align-items:center;gap:8px;background:#D4A843;color:#000;padding:12px 28px;border-radius:10px;font-size:14px;font-weight:800;text-decoration:none}
+.btn-primary:hover{text-decoration:none;opacity:0.9}
+.btn-secondary{display:inline-flex;align-items:center;gap:8px;background:transparent;color:#fff;padding:12px 28px;border-radius:10px;font-size:14px;font-weight:700;border:1px solid rgba(255,255,255,0.15);text-decoration:none}
+.btn-secondary:hover{background:rgba(255,255,255,0.06);text-decoration:none}
+.section{max-width:960px;margin:0 auto;padding:48px 24px}
+.section-title{font-size:clamp(18px,3vw,26px);font-weight:800;color:#fff;margin-bottom:8px}
+.section-sub{font-size:14px;color:rgba(255,255,255,0.45);margin-bottom:32px}
+.card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:28px}
+.gold{color:#D4A843}
+.rating-bar{display:flex;gap:4px;align-items:center}
+.rating-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.dot-fill{background:#D4A843}
+.dot-empty{background:rgba(255,255,255,0.12)}
+footer{border-top:1px solid rgba(255,255,255,0.07);padding:32px 24px;text-align:center}
+footer p{font-size:13px;color:rgba(255,255,255,0.35)}
+footer a{color:#D4A843}
+@media(max-width:600px){nav .nav-link{display:none}.section{padding:32px 16px}.hero{padding:80px 16px 40px}}
+
+.search-bar{width:100%;padding:12px 18px;border-radius:10px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04);color:#fff;font-size:14px;outline:none;margin-bottom:16px}
+.search-bar::placeholder{color:rgba(255,255,255,0.3)}
+.search-bar:focus{border-color:rgba(212,168,67,0.4)}
+.cat-btn{padding:5px 14px;border-radius:100px;border:1px solid rgba(255,255,255,0.1);background:transparent;color:rgba(255,255,255,0.5);font-size:11px;font-weight:700;cursor:pointer;transition:all 0.15s}
+.cat-btn:hover,.cat-btn.active{background:rgba(212,168,67,0.15);border-color:rgba(212,168,67,0.4);color:#D4A843}
+.cat-btn.all-btn.active{background:rgba(212,168,67,0.15);border-color:rgba(212,168,67,0.4);color:#D4A843}
+.error-table{width:100%;border-collapse:collapse;font-size:13px}
+.error-table th{font-size:10px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.1em;padding:10px 12px;text-align:left;border-bottom:1px solid rgba(255,255,255,0.08)}
+.error-table td{padding:12px 12px;vertical-align:top;border-bottom:1px solid rgba(255,255,255,0.05)}
+.error-table tr:hover td{background:rgba(255,255,255,0.025)}
+code{font-family:"JetBrains Mono",monospace;font-size:11px;background:rgba(255,255,255,0.07);padding:1px 6px;border-radius:4px;color:rgba(255,255,255,0.7)}
+.count{font-size:12px;color:rgba(255,255,255,0.35);margin-bottom:16px}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="https://swifttechco.com">Swift <span>Tech Co.</span></a>
+  <span class="spacer"></span>
+  <a class="nav-link" href="https://swifttechco.com/tools">Free Tools</a>
+  <a class="nav-link" href="https://swifttechco.com/blog">Blog</a>
+  <a class="cta-btn" href="https://swifttechco.com/services/finance/trading-platform" target="_blank" rel="noopener">Full Analysis &rarr;</a>
+</nav>
+<div class="hero">
+  <div class="badge">Error Reference</div>
+  <h1>MetaTrader 5 Error Code Reference</h1>
+  <p class="sub">Structured reference of MT5/MQL5 trade return codes, runtime errors, and fixes for algorithmic trading systems.</p>
+  <div class="actions">
+    <a class="btn-primary" href="https://swifttechco.com/services/finance/trading-platform" target="_blank" rel="noopener">Algo Trading Platform Services &rarr;</a>
+    <a class="btn-secondary" href="https://swifttechco.com/tools" target="_blank" rel="noopener">Free Tools</a>
+  </div>
+</div>
+
+<div class="section">
+  <div class="card" style="padding:20px 24px">
+    <input class="search-bar" type="search" placeholder="Search errors, codes, causes, fixes..." id="searchInput" oninput="doSearch()">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">
+      <button class="cat-btn all-btn active" data-cat="all" onclick="filterCat(this)">All (61)</button>
+      <button class="cat-btn" data-cat="account" onclick="filterCat(this)">account</button>
+<button class="cat-btn" data-cat="connection" onclick="filterCat(this)">connection</button>
+<button class="cat-btn" data-cat="market" onclick="filterCat(this)">market</button>
+<button class="cat-btn" data-cat="runtime" onclick="filterCat(this)">runtime</button>
+<button class="cat-btn" data-cat="trade_return" onclick="filterCat(this)">trade_return</button>
+    </div>
+    <div class="count" id="countLabel">61 errors</div>
+    <div style="overflow-x:auto">
+      <table class="error-table" id="errorTable">
+        <thead><tr>
+          <th>Error</th>
+          <th>Category</th>
+          <th>Cause</th>
+          <th>Fix</th>
+          
+        </tr></thead>
+        <tbody id="errorBody">
+          <tr data-cat="runtime" data-search="0 no error normal execution. no error occurred. no action required. err_success">
+  <td style="white-space:nowrap">
+    <code style="font-size:10px;color:rgba(255,255,255,0.4);display:block">ERR_SUCCESS</code>
+    <span style="font-size:12px;font-weight:700;color:#D4A843">No Error</span>
+  </td>
+  <td><span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);white-space:nowrap">runtime</span></td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">Normal execution. No error occurred.</td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5">No action required.</td>
+  
+</tr>
+<tr data-cat="runtime" data-search="1 unexpected internal error an internal terminal or mql5 runtime error with no specific cause. rare. restart the metatrader 5 terminal. check for terminal updates. contact your broker if it persists. err_internal_error">
+  <td style="white-space:nowrap">
+    <code style="font-size:10px;color:rgba(255,255,255,0.4);display:block">ERR_INTERNAL_ERROR</code>
+    <span style="font-size:12px;font-weight:700;color:#D4A843">Unexpected Internal Error</span>
+  </td>
+  <td><span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);white-space:nowrap">runtime</span></td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">An internal terminal or MQL5 runtime error with no specific cause. Rare.</td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5">Restart the MetaTrader 5 terminal. Check for terminal updates. Contact your broker if it persists.</td>
+  
+</tr>
+<tr data-cat="runtime" data-search="2 wrong internal parameter usually caused by a bug in mql5 source code passing invalid arguments to internal functions. review function calls. ensure parameter types match expected types. check mql5 documentation for function signatures. err_wrong_internal_parameter">
+  <td style="white-space:nowrap">
+    <code style="font-size:10px;color:rgba(255,255,255,0.4);display:block">ERR_WRONG_INTERNAL_PARAMETER</code>
+    <span style="font-size:12px;font-weight:700;color:#D4A843">Wrong Internal Parameter</span>
+  </td>
+  <td><span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);white-space:nowrap">runtime</span></td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">Usually caused by a bug in MQL5 source code passing invalid arguments to internal functions.</td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5">Review function calls. Ensure parameter types match expected types. Check MQL5 documentation for function signatures.</td>
+  
+</tr>
+<tr data-cat="runtime" data-search="3 invalid parameter a system function was called with an out-of-range or invalid parameter. validate all inputs before passing to system functions. check array indices and string lengths. err_invalid_parameter">
+  <td style="white-space:nowrap">
+    <code style="font-size:10px;color:rgba(255,255,255,0.4);display:block">ERR_INVALID_PARAMETER</code>
+    <span style="font-size:12px;font-weight:700;color:#D4A843">Invalid Parameter</span>
+  </td>
+  <td><span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);white-space:nowrap">runtime</span></td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">A system function was called with an out-of-range or invalid parameter.</td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5">Validate all inputs before passing to system functions. Check array indices and string lengths.</td>
+  
+</tr>
+<tr data-cat="runtime" data-search="4 not enough memory the ea or script is consuming too much memory. large arrays, deep recursion, or memory leaks. reduce array sizes. avoid unbounded recursion. free resources explicitly. profile memory usage with the mql5 profiler. err_not_enough_memory">
+  <td style="white-space:nowrap">
+    <code style="font-size:10px;color:rgba(255,255,255,0.4);display:block">ERR_NOT_ENOUGH_MEMORY</code>
+    <span style="font-size:12px;font-weight:700;color:#D4A843">Not Enough Memory</span>
+  </td>
+  <td><span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);white-space:nowrap">runtime</span></td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">The EA or script is consuming too much memory. Large arrays, deep recursion, or memory leaks.</td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5">Reduce array sizes. Avoid unbounded recursion. Free resources explicitly. Profile memory usage with the MQL5 profiler.</td>
+  
+</tr>
+<tr data-cat="runtime" data-search="5 structure or class with object attempting to copy a structure that contains non-copyable objects (e.g. objects with dynamic memory). use pointers for complex objects in structures. implement copy constructors where needed. err_struct_withobjects_orclass">
+  <td style="white-space:nowrap">
+    <code style="font-size:10px;color:rgba(255,255,255,0.4);display:block">ERR_STRUCT_WITHOBJECTS_ORCLASS</code>
+    <span style="font-size:12px;font-weight:700;color:#D4A843">Structure or Class with Object</span>
+  </td>
+  <td><span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);white-space:nowrap">runtime</span></td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">Attempting to copy a structure that contains non-copyable objects (e.g. objects with dynamic memory).</td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5">Use pointers for complex objects in structures. Implement copy constructors where needed.</td>
+  
+</tr>
+<tr data-cat="runtime" data-search="6 invalid array array index out of bounds or incorrect array size in function calls. check array sizes before access. use arraysize() to validate. use arrayresize() to ensure correct dimensions. err_invalid_array">
+  <td style="white-space:nowrap">
+    <code style="font-size:10px;color:rgba(255,255,255,0.4);display:block">ERR_INVALID_ARRAY</code>
+    <span style="font-size:12px;font-weight:700;color:#D4A843">Invalid Array</span>
+  </td>
+  <td><span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);white-space:nowrap">runtime</span></td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">Array index out of bounds or incorrect array size in function calls.</td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5">Check array sizes before access. Use ArraySize() to validate. Use ArrayResize() to ensure correct dimensions.</td>
+  
+</tr>
+<tr data-cat="runtime" data-search="7 array resize error arrayresize() failed because the system cannot allocate the requested memory. reduce the requested array size. free other arrays that are no longer needed. check available system memory. err_array_resize_error">
+  <td style="white-space:nowrap">
+    <code style="font-size:10px;color:rgba(255,255,255,0.4);display:block">ERR_ARRAY_RESIZE_ERROR</code>
+    <span style="font-size:12px;font-weight:700;color:#D4A843">Array Resize Error</span>
+  </td>
+  <td><span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);white-space:nowrap">runtime</span></td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">ArrayResize() failed because the system cannot allocate the requested memory.</td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5">Reduce the requested array size. Free other arrays that are no longer needed. Check available system memory.</td>
+  
+</tr>
+<tr data-cat="runtime" data-search="8 string resize error string concatenation or manipulation ran out of memory. avoid building very long strings in loops. use stringconcatenate() carefully and pre-allocate where possible. err_string_resize_error">
+  <td style="white-space:nowrap">
+    <code style="font-size:10px;color:rgba(255,255,255,0.4);display:block">ERR_STRING_RESIZE_ERROR</code>
+    <span style="font-size:12px;font-weight:700;color:#D4A843">String Resize Error</span>
+  </td>
+  <td><span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);white-space:nowrap">runtime</span></td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">String concatenation or manipulation ran out of memory.</td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5">Avoid building very long strings in loops. Use StringConcatenate() carefully and pre-allocate where possible.</td>
+  
+</tr>
+<tr data-cat="account" data-search="64 account disabled the trading account has been disabled by the broker. contact your broker to enable the account. this is not an ea issue. err_account_disabled">
+  <td style="white-space:nowrap">
+    <code style="font-size:10px;color:rgba(255,255,255,0.4);display:block">ERR_ACCOUNT_DISABLED</code>
+    <span style="font-size:12px;font-weight:700;color:#D4A843">Account Disabled</span>
+  </td>
+  <td><span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);white-space:nowrap">account</span></td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">The trading account has been disabled by the broker.</td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5">Contact your broker to enable the account. This is not an EA issue.</td>
+  
+</tr>
+<tr data-cat="account" data-search="65 invalid account the account number is invalid or the account does not exist on the server. verify account credentials and server address. re-login to the terminal with correct credentials. err_invalid_account">
+  <td style="white-space:nowrap">
+    <code style="font-size:10px;color:rgba(255,255,255,0.4);display:block">ERR_INVALID_ACCOUNT</code>
+    <span style="font-size:12px;font-weight:700;color:#D4A843">Invalid Account</span>
+  </td>
+  <td><span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);white-space:nowrap">account</span></td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">The account number is invalid or the account does not exist on the server.</td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5">Verify account credentials and server address. Re-login to the terminal with correct credentials.</td>
+  
+</tr>
+<tr data-cat="trade_return" data-search="128 trade timeout the trade request was sent but no response received from the broker server within the timeout period. check internet connection and server latency. verify if the order was executed by checking ordershistorytotal(). implement order confirmation logic to check if the order exists before resending. err_trade_timeout">
+  <td style="white-space:nowrap">
+    <code style="font-size:10px;color:rgba(255,255,255,0.4);display:block">ERR_TRADE_TIMEOUT</code>
+    <span style="font-size:12px;font-weight:700;color:#D4A843">Trade Timeout</span>
+  </td>
+  <td><span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);white-space:nowrap">trade_return</span></td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">The trade request was sent but no response received from the broker server within the timeout period.</td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5">Check internet connection and server latency. Verify if the order was executed by checking OrdersHistoryTotal(). Implement order confirmation logic to check if the order exists before resending.</td>
+  
+</tr>
+<tr data-cat="trade_return" data-search="129 invalid price the price specified in the trade request is invalid (zero, negative, or too far from market). always use symbolinfodouble(symbol, symbol_ask) for buy orders and symbol_bid for sell orders at the time of order submission. do not cache prices. err_invalid_price">
+  <td style="white-space:nowrap">
+    <code style="font-size:10px;color:rgba(255,255,255,0.4);display:block">ERR_INVALID_PRICE</code>
+    <span style="font-size:12px;font-weight:700;color:#D4A843">Invalid Price</span>
+  </td>
+  <td><span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);white-space:nowrap">trade_return</span></td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">The price specified in the trade request is invalid (zero, negative, or too far from market).</td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5">Always use SymbolInfoDouble(symbol, SYMBOL_ASK) for buy orders and SYMBOL_BID for sell orders at the time of order submission. Do not cache prices.</td>
+  
+</tr>
+<tr data-cat="trade_return" data-search="130 invalid stops stoploss or takeprofit levels are too close to the current price, below the broker's minimum stop level. check minimum stop level: symbolinfointeger(symbol, symbol_trade_stops_level). ensure sl/tp are at least this many points away from the current price. err_invalid_stops">
+  <td style="white-space:nowrap">
+    <code style="font-size:10px;color:rgba(255,255,255,0.4);display:block">ERR_INVALID_STOPS</code>
+    <span style="font-size:12px;font-weight:700;color:#D4A843">Invalid Stops</span>
+  </td>
+  <td><span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);white-space:nowrap">trade_return</span></td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">StopLoss or TakeProfit levels are too close to the current price, below the broker's minimum stop level.</td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5">Check minimum stop level: SymbolInfoInteger(symbol, SYMBOL_TRADE_STOPS_LEVEL). Ensure SL/TP are at least this many points away from the current price.</td>
+  
+</tr>
+<tr data-cat="trade_return" data-search="131 invalid trade volume the lot size is invalid — not between symbol_volume_min and symbol_volume_max, or not a multiple of symbol_volume_step. use normalizedouble(lots, 2) and clamp: lots = mathmax(minlot, mathmin(maxlot, lots)). check: symbolinfodouble(symbol, symbol_volume_min/max/step). err_invalid_trade_volume">
+  <td style="white-space:nowrap">
+    <code style="font-size:10px;color:rgba(255,255,255,0.4);display:block">ERR_INVALID_TRADE_VOLUME</code>
+    <span style="font-size:12px;font-weight:700;color:#D4A843">Invalid Trade Volume</span>
+  </td>
+  <td><span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);white-space:nowrap">trade_return</span></td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">The lot size is invalid — not between SYMBOL_VOLUME_MIN and SYMBOL_VOLUME_MAX, or not a multiple of SYMBOL_VOLUME_STEP.</td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5">Use NormalizeDouble(lots, 2) and clamp: lots = MathMax(minLot, MathMin(maxLot, lots)). Check: SymbolInfoDouble(symbol, SYMBOL_VOLUME_MIN/MAX/STEP).</td>
+  
+</tr>
+<tr data-cat="market" data-search="132 market closed attempting to trade outside of market hours for the symbol. common for stocks, indices, and some forex pairs on weekends. check market session hours: symbolinfosessiontrade(). add market hour checks to your ea. do not send orders on weekends or outside trading sessions. err_market_closed">
+  <td style="white-space:nowrap">
+    <code style="font-size:10px;color:rgba(255,255,255,0.4);display:block">ERR_MARKET_CLOSED</code>
+    <span style="font-size:12px;font-weight:700;color:#D4A843">Market Closed</span>
+  </td>
+  <td><span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);white-space:nowrap">market</span></td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">Attempting to trade outside of market hours for the symbol. Common for stocks, indices, and some forex pairs on weekends.</td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5">Check market session hours: SymbolInfoSessionTrade(). Add market hour checks to your EA. Do not send orders on weekends or outside trading sessions.</td>
+  
+</tr>
+<tr data-cat="account" data-search="133 trade disabled trading is disabled on the account, either by the broker or by the ea setting in the terminal (autotrading button disabled). enable autotrading in the mt5 toolbar. check account permissions: accountinfointeger(account_trade_allowed). verify the ea is allowed to trade: terminalinfointeger(terminal_trade_allowed). err_trade_disabled">
+  <td style="white-space:nowrap">
+    <code style="font-size:10px;color:rgba(255,255,255,0.4);display:block">ERR_TRADE_DISABLED</code>
+    <span style="font-size:12px;font-weight:700;color:#D4A843">Trade Disabled</span>
+  </td>
+  <td><span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);white-space:nowrap">account</span></td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">Trading is disabled on the account, either by the broker or by the EA setting in the terminal (AutoTrading button disabled).</td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5">Enable AutoTrading in the MT5 toolbar. Check account permissions: AccountInfoInteger(ACCOUNT_TRADE_ALLOWED). Verify the EA is allowed to trade: TerminalInfoInteger(TERMINAL_TRADE_ALLOWED).</td>
+  
+</tr>
+<tr data-cat="account" data-search="134 not enough money insufficient free margin to open the position with the specified lot size. calculate required margin before trading: accountinfodouble(account_margin_free). reduce lot size. add funds to the account. implement margin check before order submission. err_not_enough_money">
+  <td style="white-space:nowrap">
+    <code style="font-size:10px;color:rgba(255,255,255,0.4);display:block">ERR_NOT_ENOUGH_MONEY</code>
+    <span style="font-size:12px;font-weight:700;color:#D4A843">Not Enough Money</span>
+  </td>
+  <td><span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);white-space:nowrap">account</span></td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">Insufficient free margin to open the position with the specified lot size.</td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5">Calculate required margin before trading: AccountInfoDouble(ACCOUNT_MARGIN_FREE). Reduce lot size. Add funds to the account. Implement margin check before order submission.</td>
+  
+</tr>
+<tr data-cat="market" data-search="135 price changed the market price moved between when the ea requested the price and when the order was submitted. common during high volatility. this is normal during fast markets. use order_type_buy / order_type_sell (market orders) instead of limit orders when immediacy is required. implement retry logic. err_price_changed">
+  <td style="white-space:nowrap">
+    <code style="font-size:10px;color:rgba(255,255,255,0.4);display:block">ERR_PRICE_CHANGED</code>
+    <span style="font-size:12px;font-weight:700;color:#D4A843">Price Changed</span>
+  </td>
+  <td><span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);white-space:nowrap">market</span></td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">The market price moved between when the EA requested the price and when the order was submitted. Common during high volatility.</td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5">This is normal during fast markets. Use ORDER_TYPE_BUY / ORDER_TYPE_SELL (market orders) instead of limit orders when immediacy is required. Implement retry logic.</td>
+  
+</tr>
+<tr data-cat="market" data-search="136 off quotes the symbol has no active market quotes. happens during weekend, outside trading hours, or when the broker's feed is disconnected. check if market is active with symbolinfointeger(symbol, symbol_trade_mode). wait for quotes to resume. add connectivity and session checks to the ea. err_off_quotes">
+  <td style="white-space:nowrap">
+    <code style="font-size:10px;color:rgba(255,255,255,0.4);display:block">ERR_OFF_QUOTES</code>
+    <span style="font-size:12px;font-weight:700;color:#D4A843">Off Quotes</span>
+  </td>
+  <td><span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);white-space:nowrap">market</span></td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">The symbol has no active market quotes. Happens during weekend, outside trading hours, or when the broker's feed is disconnected.</td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5">Check if market is active with SymbolInfoInteger(symbol, SYMBOL_TRADE_MODE). Wait for quotes to resume. Add connectivity and session checks to the EA.</td>
+  
+</tr>
+<tr data-cat="trade_return" data-search="137 broker busy the broker's trade server is temporarily overloaded and cannot process the request. implement retry with delay (e.g. sleep(1000) then retry). do not spam the server. check broker status page if this occurs frequently. err_broker_busy">
+  <td style="white-space:nowrap">
+    <code style="font-size:10px;color:rgba(255,255,255,0.4);display:block">ERR_BROKER_BUSY</code>
+    <span style="font-size:12px;font-weight:700;color:#D4A843">Broker Busy</span>
+  </td>
+  <td><span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);white-space:nowrap">trade_return</span></td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">The broker's trade server is temporarily overloaded and cannot process the request.</td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5">Implement retry with delay (e.g. Sleep(1000) then retry). Do not spam the server. Check broker status page if this occurs frequently.</td>
+  
+</tr>
+<tr data-cat="market" data-search="138 requote the price has moved since the request was made and the broker is offering a new price (requote). set slippage tolerance in the trade request (deviation field). use order_filling_ioc or order_filling_fok based on broker requirements. consider increasing slippage allowance. err_requote">
+  <td style="white-space:nowrap">
+    <code style="font-size:10px;color:rgba(255,255,255,0.4);display:block">ERR_REQUOTE</code>
+    <span style="font-size:12px;font-weight:700;color:#D4A843">Requote</span>
+  </td>
+  <td><span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);white-space:nowrap">market</span></td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">The price has moved since the request was made and the broker is offering a new price (requote).</td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5">Set slippage tolerance in the trade request (deviation field). Use ORDER_FILLING_IOC or ORDER_FILLING_FOK based on broker requirements. Consider increasing slippage allowance.</td>
+  
+</tr>
+<tr data-cat="trade_return" data-search="139 order locked the order cannot be modified or closed because it is currently being processed. wait for the order to finish processing before attempting modification. implement retry logic with a short delay. err_order_locked">
+  <td style="white-space:nowrap">
+    <code style="font-size:10px;color:rgba(255,255,255,0.4);display:block">ERR_ORDER_LOCKED</code>
+    <span style="font-size:12px;font-weight:700;color:#D4A843">Order Locked</span>
+  </td>
+  <td><span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);white-space:nowrap">trade_return</span></td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">The order cannot be modified or closed because it is currently being processed.</td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5">Wait for the order to finish processing before attempting modification. Implement retry logic with a short delay.</td>
+  
+</tr>
+<tr data-cat="account" data-search="140 long positions only allowed the account or symbol only permits long (buy) positions. short selling is not allowed. check account type and symbol restrictions. some retail accounts and certain instruments (e.g. otc stocks) may not allow shorting. err_long_positions_only_allowed">
+  <td style="white-space:nowrap">
+    <code style="font-size:10px;color:rgba(255,255,255,0.4);display:block">ERR_LONG_POSITIONS_ONLY_ALLOWED</code>
+    <span style="font-size:12px;font-weight:700;color:#D4A843">Long Positions Only Allowed</span>
+  </td>
+  <td><span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);white-space:nowrap">account</span></td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">The account or symbol only permits long (buy) positions. Short selling is not allowed.</td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5">Check account type and symbol restrictions. Some retail accounts and certain instruments (e.g. OTC stocks) may not allow shorting.</td>
+  
+</tr>
+<tr data-cat="trade_return" data-search="141 too many requests the ea is sending too many trade requests to the server in a short time. add delays between trade requests (sleep()). use a flag to prevent order spamming in ontick(). process trade events in ontradetransaction() instead of checking every tick. err_too_many_requests">
+  <td style="white-space:nowrap">
+    <code style="font-size:10px;color:rgba(255,255,255,0.4);display:block">ERR_TOO_MANY_REQUESTS</code>
+    <span style="font-size:12px;font-weight:700;color:#D4A843">Too Many Requests</span>
+  </td>
+  <td><span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);white-space:nowrap">trade_return</span></td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">The EA is sending too many trade requests to the server in a short time.</td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5">Add delays between trade requests (Sleep()). Use a flag to prevent order spamming in OnTick(). Process trade events in OnTradeTransaction() instead of checking every tick.</td>
+  
+</tr>
+<tr data-cat="trade_return" data-search="145 modification denied attempting to modify sl/tp to a level that violates the broker's minimum stop level. check symbol_trade_stops_level and symbol_trade_freeze_level before modifying. ensure new sl/tp meet minimum distance requirements. err_trade_modify_denied">
+  <td style="white-space:nowrap">
+    <code style="font-size:10px;color:rgba(255,255,255,0.4);display:block">ERR_TRADE_MODIFY_DENIED</code>
+    <span style="font-size:12px;font-weight:700;color:#D4A843">Modification Denied</span>
+  </td>
+  <td><span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);white-space:nowrap">trade_return</span></td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">Attempting to modify SL/TP to a level that violates the broker's minimum stop level.</td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5">Check SYMBOL_TRADE_STOPS_LEVEL and SYMBOL_TRADE_FREEZE_LEVEL before modifying. Ensure new SL/TP meet minimum distance requirements.</td>
+  
+</tr>
+<tr data-cat="trade_return" data-search="146 trade context busy another trade operation is in progress. mt5 allows only one trade operation at a time. use istradeallowed() to check before sending orders. use a semaphore or flag to serialize trade requests. in mql5, use expert advisor's ontradetransaction for confirmation. err_trade_context_busy">
+  <td style="white-space:nowrap">
+    <code style="font-size:10px;color:rgba(255,255,255,0.4);display:block">ERR_TRADE_CONTEXT_BUSY</code>
+    <span style="font-size:12px;font-weight:700;color:#D4A843">Trade Context Busy</span>
+  </td>
+  <td><span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);white-space:nowrap">trade_return</span></td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">Another trade operation is in progress. MT5 allows only one trade operation at a time.</td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5">Use IsTradeAllowed() to check before sending orders. Use a semaphore or flag to serialize trade requests. In MQL5, use Expert Advisor's OnTradeTransaction for confirmation.</td>
+  
+</tr>
+<tr data-cat="trade_return" data-search="147 expiration denied the broker does not allow pending orders with expiration times. remove the expiration time from the trade request (set order_expiration to 0). use order_time_gtc instead of order_time_specified. err_trade_expiration_denied">
+  <td style="white-space:nowrap">
+    <code style="font-size:10px;color:rgba(255,255,255,0.4);display:block">ERR_TRADE_EXPIRATION_DENIED</code>
+    <span style="font-size:12px;font-weight:700;color:#D4A843">Expiration Denied</span>
+  </td>
+  <td><span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);white-space:nowrap">trade_return</span></td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">The broker does not allow pending orders with expiration times.</td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5">Remove the expiration time from the trade request (set order_expiration to 0). Use ORDER_TIME_GTC instead of ORDER_TIME_SPECIFIED.</td>
+  
+</tr>
+<tr data-cat="account" data-search="148 too many orders broker-side limit on the number of simultaneously open or pending orders has been reached. close or cancel some existing orders before opening new ones. check the limit in account settings. implement order count checks before placing new orders. err_trade_too_many_orders">
+  <td style="white-space:nowrap">
+    <code style="font-size:10px;color:rgba(255,255,255,0.4);display:block">ERR_TRADE_TOO_MANY_ORDERS</code>
+    <span style="font-size:12px;font-weight:700;color:#D4A843">Too Many Orders</span>
+  </td>
+  <td><span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);white-space:nowrap">account</span></td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">Broker-side limit on the number of simultaneously open or pending orders has been reached.</td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5">Close or cancel some existing orders before opening new ones. Check the limit in account settings. Implement order count checks before placing new orders.</td>
+  
+</tr>
+<tr data-cat="trade_return" data-search="10000 requote (trade return code) market moved between request and server processing. resend with the new price. increase deviation in the trade request for market orders. trade_retcode_requote">
+  <td style="white-space:nowrap">
+    <code style="font-size:10px;color:rgba(255,255,255,0.4);display:block">TRADE_RETCODE_REQUOTE</code>
+    <span style="font-size:12px;font-weight:700;color:#D4A843">Requote (Trade Return Code)</span>
+  </td>
+  <td><span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);white-space:nowrap">trade_return</span></td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">Market moved between request and server processing.</td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5">Resend with the new price. Increase deviation in the trade request for market orders.</td>
+  
+</tr>
+<tr data-cat="trade_return" data-search="10001 request rejected the trade server rejected the request without a specific reason. check trade request parameters. verify account permissions and market conditions. log the full mqltraderequest and mqltraderesult for debugging. trade_retcode_reject">
+  <td style="white-space:nowrap">
+    <code style="font-size:10px;color:rgba(255,255,255,0.4);display:block">TRADE_RETCODE_REJECT</code>
+    <span style="font-size:12px;font-weight:700;color:#D4A843">Request Rejected</span>
+  </td>
+  <td><span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);white-space:nowrap">trade_return</span></td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">The trade server rejected the request without a specific reason.</td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5">Check trade request parameters. Verify account permissions and market conditions. Log the full MqlTradeRequest and MqlTradeResult for debugging.</td>
+  
+</tr>
+<tr data-cat="trade_return" data-search="10002 request cancelled the trader or automated system cancelled the request before processing. no action needed if intentional. check ea logic if this is unexpected. trade_retcode_cancel">
+  <td style="white-space:nowrap">
+    <code style="font-size:10px;color:rgba(255,255,255,0.4);display:block">TRADE_RETCODE_CANCEL</code>
+    <span style="font-size:12px;font-weight:700;color:#D4A843">Request Cancelled</span>
+  </td>
+  <td><span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);white-space:nowrap">trade_return</span></td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">The trader or automated system cancelled the request before processing.</td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5">No action needed if intentional. Check EA logic if this is unexpected.</td>
+  
+</tr>
+<tr data-cat="trade_return" data-search="10003 order placed the order has been successfully placed on the server (for pending orders). no action needed. confirm using orderselect() or ontradetransaction(). trade_retcode_placed">
+  <td style="white-space:nowrap">
+    <code style="font-size:10px;color:rgba(255,255,255,0.4);display:block">TRADE_RETCODE_PLACED</code>
+    <span style="font-size:12px;font-weight:700;color:#D4A843">Order Placed</span>
+  </td>
+  <td><span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);white-space:nowrap">trade_return</span></td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">The order has been successfully placed on the server (for pending orders).</td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5">No action needed. Confirm using OrderSelect() or OnTradeTransaction().</td>
+  
+</tr>
+<tr data-cat="trade_return" data-search="10004 request done trade operation completed as requested. no action needed. confirm order/position using positionselect() or historyorderselect(). trade_retcode_done">
+  <td style="white-space:nowrap">
+    <code style="font-size:10px;color:rgba(255,255,255,0.4);display:block">TRADE_RETCODE_DONE</code>
+    <span style="font-size:12px;font-weight:700;color:#D4A843">Request Done</span>
+  </td>
+  <td><span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);white-space:nowrap">trade_return</span></td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">Trade operation completed as requested.</td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5">No action needed. Confirm order/position using PositionSelect() or HistoryOrderSelect().</td>
+  
+</tr>
+<tr data-cat="trade_return" data-search="10005 request done partially only part of the requested volume was executed. common with order_filling_return fill mode. check actual filled volume in mqltraderesult.volume. decide whether to send a follow-up order for the remaining volume. trade_retcode_done_partial">
+  <td style="white-space:nowrap">
+    <code style="font-size:10px;color:rgba(255,255,255,0.4);display:block">TRADE_RETCODE_DONE_PARTIAL</code>
+    <span style="font-size:12px;font-weight:700;color:#D4A843">Request Done Partially</span>
+  </td>
+  <td><span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);white-space:nowrap">trade_return</span></td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">Only part of the requested volume was executed. Common with ORDER_FILLING_RETURN fill mode.</td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5">Check actual filled volume in MqlTradeResult.volume. Decide whether to send a follow-up order for the remaining volume.</td>
+  
+</tr>
+<tr data-cat="trade_return" data-search="10006 request processing error a generic error during server-side order processing. log the full result for debugging. check mqltraderesult.comment for additional details. verify all trade request fields are valid. trade_retcode_error">
+  <td style="white-space:nowrap">
+    <code style="font-size:10px;color:rgba(255,255,255,0.4);display:block">TRADE_RETCODE_ERROR</code>
+    <span style="font-size:12px;font-weight:700;color:#D4A843">Request Processing Error</span>
+  </td>
+  <td><span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);white-space:nowrap">trade_return</span></td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">A generic error during server-side order processing.</td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5">Log the full result for debugging. Check MqlTradeResult.comment for additional details. Verify all trade request fields are valid.</td>
+  
+</tr>
+<tr data-cat="trade_return" data-search="10007 request timed out the request was not processed within the allowed time. check connectivity. verify if the order was placed by checking order history before resending to avoid duplicate orders. trade_retcode_timeout">
+  <td style="white-space:nowrap">
+    <code style="font-size:10px;color:rgba(255,255,255,0.4);display:block">TRADE_RETCODE_TIMEOUT</code>
+    <span style="font-size:12px;font-weight:700;color:#D4A843">Request Timed Out</span>
+  </td>
+  <td><span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);white-space:nowrap">trade_return</span></td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">The request was not processed within the allowed time.</td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5">Check connectivity. Verify if the order was placed by checking order history before resending to avoid duplicate orders.</td>
+  
+</tr>
+<tr data-cat="trade_return" data-search="10008 invalid request the mqltraderequest structure contains invalid field values. validate all fields in mqltraderequest. log the full request for debugging. check symbol, volume, price, sl, tp, type, and action fields. trade_retcode_invalid">
+  <td style="white-space:nowrap">
+    <code style="font-size:10px;color:rgba(255,255,255,0.4);display:block">TRADE_RETCODE_INVALID</code>
+    <span style="font-size:12px;font-weight:700;color:#D4A843">Invalid Request</span>
+  </td>
+  <td><span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);white-space:nowrap">trade_return</span></td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">The MqlTradeRequest structure contains invalid field values.</td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5">Validate all fields in MqlTradeRequest. Log the full request for debugging. Check symbol, volume, price, sl, tp, type, and action fields.</td>
+  
+</tr>
+<tr data-cat="trade_return" data-search="10009 invalid volume in request volume (lot size) does not meet broker requirements. normalize volume to valid step: volume = mathfloor(rawlots / lotstep) * lotstep. check symbol_volume_min, max, step. trade_retcode_invalid_volume">
+  <td style="white-space:nowrap">
+    <code style="font-size:10px;color:rgba(255,255,255,0.4);display:block">TRADE_RETCODE_INVALID_VOLUME</code>
+    <span style="font-size:12px;font-weight:700;color:#D4A843">Invalid Volume in Request</span>
+  </td>
+  <td><span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);white-space:nowrap">trade_return</span></td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">Volume (lot size) does not meet broker requirements.</td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5">Normalize volume to valid step: volume = MathFloor(rawLots / lotStep) * lotStep. Check SYMBOL_VOLUME_MIN, MAX, STEP.</td>
+  
+</tr>
+<tr data-cat="trade_return" data-search="10010 invalid price in request the price in the trade request is invalid or stale. refresh price from symbolinfodouble() immediately before order submission. trade_retcode_invalid_price">
+  <td style="white-space:nowrap">
+    <code style="font-size:10px;color:rgba(255,255,255,0.4);display:block">TRADE_RETCODE_INVALID_PRICE</code>
+    <span style="font-size:12px;font-weight:700;color:#D4A843">Invalid Price in Request</span>
+  </td>
+  <td><span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);white-space:nowrap">trade_return</span></td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">The price in the trade request is invalid or stale.</td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5">Refresh price from SymbolInfoDouble() immediately before order submission.</td>
+  
+</tr>
+<tr data-cat="trade_return" data-search="10011 invalid stops in request sl/tp too close to the current price or violates broker stop levels. use symbol_trade_stops_level to calculate minimum sl/tp distance. add buffer: stops_level * point * 2. trade_retcode_invalid_stops">
+  <td style="white-space:nowrap">
+    <code style="font-size:10px;color:rgba(255,255,255,0.4);display:block">TRADE_RETCODE_INVALID_STOPS</code>
+    <span style="font-size:12px;font-weight:700;color:#D4A843">Invalid Stops in Request</span>
+  </td>
+  <td><span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);white-space:nowrap">trade_return</span></td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">SL/TP too close to the current price or violates broker stop levels.</td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5">Use SYMBOL_TRADE_STOPS_LEVEL to calculate minimum SL/TP distance. Add buffer: stops_level * point * 2.</td>
+  
+</tr>
+<tr data-cat="trade_return" data-search="10012 trade disabled for symbol trading is not allowed for the symbol or on the account. check symbol_trade_mode: symbolinfointeger(symbol, symbol_trade_mode). mode 0 = disabled. check autotrading button in terminal. trade_retcode_trade_disabled">
+  <td style="white-space:nowrap">
+    <code style="font-size:10px;color:rgba(255,255,255,0.4);display:block">TRADE_RETCODE_TRADE_DISABLED</code>
+    <span style="font-size:12px;font-weight:700;color:#D4A843">Trade Disabled for Symbol</span>
+  </td>
+  <td><span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);white-space:nowrap">trade_return</span></td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">Trading is not allowed for the symbol or on the account.</td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5">Check SYMBOL_TRADE_MODE: SymbolInfoInteger(symbol, SYMBOL_TRADE_MODE). Mode 0 = disabled. Check AutoTrading button in terminal.</td>
+  
+</tr>
+<tr data-cat="trade_return" data-search="10013 market closed (trade return) trade sent outside of market hours. add session time checks. use symbolinfosessiontrade() to get valid trading sessions before placing orders. trade_retcode_market_closed">
+  <td style="white-space:nowrap">
+    <code style="font-size:10px;color:rgba(255,255,255,0.4);display:block">TRADE_RETCODE_MARKET_CLOSED</code>
+    <span style="font-size:12px;font-weight:700;color:#D4A843">Market Closed (Trade Return)</span>
+  </td>
+  <td><span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);white-space:nowrap">trade_return</span></td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">Trade sent outside of market hours.</td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5">Add session time checks. Use SymbolInfoSessionTrade() to get valid trading sessions before placing orders.</td>
+  
+</tr>
+<tr data-cat="trade_return" data-search="10014 no money (trade return) free margin is insufficient for the requested trade size. calculate required margin before trading. reduce lot size. add margin checks: accountinfodouble(account_margin_free). trade_retcode_no_money">
+  <td style="white-space:nowrap">
+    <code style="font-size:10px;color:rgba(255,255,255,0.4);display:block">TRADE_RETCODE_NO_MONEY</code>
+    <span style="font-size:12px;font-weight:700;color:#D4A843">No Money (Trade Return)</span>
+  </td>
+  <td><span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);white-space:nowrap">trade_return</span></td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">Free margin is insufficient for the requested trade size.</td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5">Calculate required margin before trading. Reduce lot size. Add margin checks: AccountInfoDouble(ACCOUNT_MARGIN_FREE).</td>
+  
+</tr>
+<tr data-cat="trade_return" data-search="10015 price changed (trade return) market moved between order creation and server processing. retry with fresh price. use market orders with appropriate deviation setting for fast execution. trade_retcode_price_changed">
+  <td style="white-space:nowrap">
+    <code style="font-size:10px;color:rgba(255,255,255,0.4);display:block">TRADE_RETCODE_PRICE_CHANGED</code>
+    <span style="font-size:12px;font-weight:700;color:#D4A843">Price Changed (Trade Return)</span>
+  </td>
+  <td><span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);white-space:nowrap">trade_return</span></td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">Market moved between order creation and server processing.</td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5">Retry with fresh price. Use market orders with appropriate deviation setting for fast execution.</td>
+  
+</tr>
+<tr data-cat="trade_return" data-search="10016 price off quotes no current market quotes available for the symbol. check if the symbol has valid quotes: symbolinfodouble(symbol, symbol_bid). wait for market to open or connection to be restored. trade_retcode_price_off">
+  <td style="white-space:nowrap">
+    <code style="font-size:10px;color:rgba(255,255,255,0.4);display:block">TRADE_RETCODE_PRICE_OFF</code>
+    <span style="font-size:12px;font-weight:700;color:#D4A843">Price Off Quotes</span>
+  </td>
+  <td><span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);white-space:nowrap">trade_return</span></td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">No current market quotes available for the symbol.</td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5">Check if the symbol has valid quotes: SymbolInfoDouble(symbol, SYMBOL_BID). Wait for market to open or connection to be restored.</td>
+  
+</tr>
+<tr data-cat="trade_return" data-search="10017 invalid expiration the expiration time for a pending order is in the past or not allowed by the broker. use order_time_gtc or set expiration to a future time. check broker's allowed expiration types. trade_retcode_invalid_expiration">
+  <td style="white-space:nowrap">
+    <code style="font-size:10px;color:rgba(255,255,255,0.4);display:block">TRADE_RETCODE_INVALID_EXPIRATION</code>
+    <span style="font-size:12px;font-weight:700;color:#D4A843">Invalid Expiration</span>
+  </td>
+  <td><span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);white-space:nowrap">trade_return</span></td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">The expiration time for a pending order is in the past or not allowed by the broker.</td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5">Use ORDER_TIME_GTC or set expiration to a future time. Check broker's allowed expiration types.</td>
+  
+</tr>
+<tr data-cat="trade_return" data-search="10018 order state changed the order was modified or cancelled externally while being processed. refresh order state before operating on it. use ontradetransaction() to track order state changes in real time. trade_retcode_order_changed">
+  <td style="white-space:nowrap">
+    <code style="font-size:10px;color:rgba(255,255,255,0.4);display:block">TRADE_RETCODE_ORDER_CHANGED</code>
+    <span style="font-size:12px;font-weight:700;color:#D4A843">Order State Changed</span>
+  </td>
+  <td><span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);white-space:nowrap">trade_return</span></td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">The order was modified or cancelled externally while being processed.</td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5">Refresh order state before operating on it. Use OnTradeTransaction() to track order state changes in real time.</td>
+  
+</tr>
+<tr data-cat="trade_return" data-search="10019 too many requests (trade return) order rate limit exceeded at the broker level. add delay between trade operations. implement a throttle mechanism. process one trade per ontick() maximum. trade_retcode_too_many_requests">
+  <td style="white-space:nowrap">
+    <code style="font-size:10px;color:rgba(255,255,255,0.4);display:block">TRADE_RETCODE_TOO_MANY_REQUESTS</code>
+    <span style="font-size:12px;font-weight:700;color:#D4A843">Too Many Requests (Trade Return)</span>
+  </td>
+  <td><span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);white-space:nowrap">trade_return</span></td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">Order rate limit exceeded at the broker level.</td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5">Add delay between trade operations. Implement a throttle mechanism. Process one trade per OnTick() maximum.</td>
+  
+</tr>
+<tr data-cat="trade_return" data-search="10021 no changes a modification request was sent but the new values are identical to the current values. compare current order sl/tp with new values before sending modification request to avoid this. trade_retcode_no_changes">
+  <td style="white-space:nowrap">
+    <code style="font-size:10px;color:rgba(255,255,255,0.4);display:block">TRADE_RETCODE_NO_CHANGES</code>
+    <span style="font-size:12px;font-weight:700;color:#D4A843">No Changes</span>
+  </td>
+  <td><span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);white-space:nowrap">trade_return</span></td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">A modification request was sent but the new values are identical to the current values.</td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5">Compare current order SL/TP with new values before sending modification request to avoid this.</td>
+  
+</tr>
+<tr data-cat="trade_return" data-search="10022 autotrading disabled by server the broker's server has disabled automated trading, possibly due to a news event or maintenance. check broker announcements. implement terminalinfointeger(terminal_trade_allowed) and accountinfointeger(account_trade_allowed) checks. trade_retcode_server_disables_at">
+  <td style="white-space:nowrap">
+    <code style="font-size:10px;color:rgba(255,255,255,0.4);display:block">TRADE_RETCODE_SERVER_DISABLES_AT</code>
+    <span style="font-size:12px;font-weight:700;color:#D4A843">AutoTrading Disabled by Server</span>
+  </td>
+  <td><span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);white-space:nowrap">trade_return</span></td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">The broker's server has disabled automated trading, possibly due to a news event or maintenance.</td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5">Check broker announcements. Implement TerminalInfoInteger(TERMINAL_TRADE_ALLOWED) and AccountInfoInteger(ACCOUNT_TRADE_ALLOWED) checks.</td>
+  
+</tr>
+<tr data-cat="trade_return" data-search="10023 autotrading disabled by client the autotrading button in the mt5 terminal is toggled off. click the autotrading button in the mt5 toolbar to enable it. check terminal permissions: terminalinfointeger(terminal_trade_allowed). trade_retcode_client_disables_at">
+  <td style="white-space:nowrap">
+    <code style="font-size:10px;color:rgba(255,255,255,0.4);display:block">TRADE_RETCODE_CLIENT_DISABLES_AT</code>
+    <span style="font-size:12px;font-weight:700;color:#D4A843">AutoTrading Disabled by Client</span>
+  </td>
+  <td><span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);white-space:nowrap">trade_return</span></td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">The AutoTrading button in the MT5 terminal is toggled off.</td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5">Click the AutoTrading button in the MT5 toolbar to enable it. Check terminal permissions: TerminalInfoInteger(TERMINAL_TRADE_ALLOWED).</td>
+  
+</tr>
+<tr data-cat="trade_return" data-search="10024 request locked trade context is busy with another operation. implement a trade lock mechanism. wait and retry after a short delay. trade_retcode_locked">
+  <td style="white-space:nowrap">
+    <code style="font-size:10px;color:rgba(255,255,255,0.4);display:block">TRADE_RETCODE_LOCKED</code>
+    <span style="font-size:12px;font-weight:700;color:#D4A843">Request Locked</span>
+  </td>
+  <td><span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);white-space:nowrap">trade_return</span></td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">Trade context is busy with another operation.</td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5">Implement a trade lock mechanism. Wait and retry after a short delay.</td>
+  
+</tr>
+<tr data-cat="trade_return" data-search="10025 order frozen the order/position is frozen because the market price is within the broker's freeze level range. wait until the price moves outside the freeze zone. check symbol_trade_freeze_level. avoid modifying orders during high-volatility events. trade_retcode_frozen">
+  <td style="white-space:nowrap">
+    <code style="font-size:10px;color:rgba(255,255,255,0.4);display:block">TRADE_RETCODE_FROZEN</code>
+    <span style="font-size:12px;font-weight:700;color:#D4A843">Order Frozen</span>
+  </td>
+  <td><span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);white-space:nowrap">trade_return</span></td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">The order/position is frozen because the market price is within the broker's freeze level range.</td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5">Wait until the price moves outside the freeze zone. Check SYMBOL_TRADE_FREEZE_LEVEL. Avoid modifying orders during high-volatility events.</td>
+  
+</tr>
+<tr data-cat="trade_return" data-search="10026 invalid fill mode the order_filling type specified is not supported by the broker or symbol. check symbol_filling_mode to determine supported fill modes. use order_filling_ioc for most brokers. test fill modes in a demo account. trade_retcode_invalid_fill">
+  <td style="white-space:nowrap">
+    <code style="font-size:10px;color:rgba(255,255,255,0.4);display:block">TRADE_RETCODE_INVALID_FILL</code>
+    <span style="font-size:12px;font-weight:700;color:#D4A843">Invalid Fill Mode</span>
+  </td>
+  <td><span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);white-space:nowrap">trade_return</span></td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">The ORDER_FILLING type specified is not supported by the broker or symbol.</td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5">Check SYMBOL_FILLING_MODE to determine supported fill modes. Use ORDER_FILLING_IOC for most brokers. Test fill modes in a demo account.</td>
+  
+</tr>
+<tr data-cat="connection" data-search="10027 no connection to trade server the terminal lost connection to the broker's trade server. check internet connection. verify server address in account settings. implement connection checks: terminalinfointeger(terminal_connected). trade_retcode_connection">
+  <td style="white-space:nowrap">
+    <code style="font-size:10px;color:rgba(255,255,255,0.4);display:block">TRADE_RETCODE_CONNECTION</code>
+    <span style="font-size:12px;font-weight:700;color:#D4A843">No Connection to Trade Server</span>
+  </td>
+  <td><span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);white-space:nowrap">connection</span></td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">The terminal lost connection to the broker's trade server.</td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5">Check internet connection. Verify server address in account settings. Implement connection checks: TerminalInfoInteger(TERMINAL_CONNECTED).</td>
+  
+</tr>
+<tr data-cat="account" data-search="10028 real account only attempting an operation that is only permitted on live accounts, not demo accounts. test on demo where possible, but note some features (real money withdrawal, certain broker api features) are live-only. trade_retcode_only_real">
+  <td style="white-space:nowrap">
+    <code style="font-size:10px;color:rgba(255,255,255,0.4);display:block">TRADE_RETCODE_ONLY_REAL</code>
+    <span style="font-size:12px;font-weight:700;color:#D4A843">Real Account Only</span>
+  </td>
+  <td><span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);white-space:nowrap">account</span></td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">Attempting an operation that is only permitted on live accounts, not demo accounts.</td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5">Test on demo where possible, but note some features (real money withdrawal, certain broker API features) are live-only.</td>
+  
+</tr>
+<tr data-cat="account" data-search="10029 pending order limit reached the broker's maximum number of pending orders has been reached. cancel unnecessary pending orders before placing new ones. check the broker's pending order limit. trade_retcode_limit_orders">
+  <td style="white-space:nowrap">
+    <code style="font-size:10px;color:rgba(255,255,255,0.4);display:block">TRADE_RETCODE_LIMIT_ORDERS</code>
+    <span style="font-size:12px;font-weight:700;color:#D4A843">Pending Order Limit Reached</span>
+  </td>
+  <td><span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);white-space:nowrap">account</span></td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">The broker's maximum number of pending orders has been reached.</td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5">Cancel unnecessary pending orders before placing new ones. Check the broker's pending order limit.</td>
+  
+</tr>
+<tr data-cat="account" data-search="10030 volume limit reached the total open volume for the symbol exceeds the broker's per-symbol or per-account limit. reduce open positions on the symbol. check broker limits for maximum volume per symbol. diversify across symbols if hitting limits. trade_retcode_limit_volume">
+  <td style="white-space:nowrap">
+    <code style="font-size:10px;color:rgba(255,255,255,0.4);display:block">TRADE_RETCODE_LIMIT_VOLUME</code>
+    <span style="font-size:12px;font-weight:700;color:#D4A843">Volume Limit Reached</span>
+  </td>
+  <td><span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);white-space:nowrap">account</span></td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">The total open volume for the symbol exceeds the broker's per-symbol or per-account limit.</td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5">Reduce open positions on the symbol. Check broker limits for maximum volume per symbol. Diversify across symbols if hitting limits.</td>
+  
+</tr>
+<tr data-cat="trade_return" data-search="10031 incorrect or prohibited order type the order type is not allowed for this symbol or in the current market conditions. check symbol_trade_mode and symbol_order_mode. use only supported order types for the symbol. some cfds do not support all order types. trade_retcode_invalid_order">
+  <td style="white-space:nowrap">
+    <code style="font-size:10px;color:rgba(255,255,255,0.4);display:block">TRADE_RETCODE_INVALID_ORDER</code>
+    <span style="font-size:12px;font-weight:700;color:#D4A843">Incorrect or Prohibited Order Type</span>
+  </td>
+  <td><span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);white-space:nowrap">trade_return</span></td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">The order type is not allowed for this symbol or in the current market conditions.</td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5">Check SYMBOL_TRADE_MODE and SYMBOL_ORDER_MODE. Use only supported order types for the symbol. Some CFDs do not support all order types.</td>
+  
+</tr>
+<tr data-cat="trade_return" data-search="10032 position already closed attempting to modify or close a position that no longer exists. check positionselect() before operating on a position. use ontradetransaction() to track position closures in real time. trade_retcode_position_closed">
+  <td style="white-space:nowrap">
+    <code style="font-size:10px;color:rgba(255,255,255,0.4);display:block">TRADE_RETCODE_POSITION_CLOSED</code>
+    <span style="font-size:12px;font-weight:700;color:#D4A843">Position Already Closed</span>
+  </td>
+  <td><span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5);white-space:nowrap">trade_return</span></td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5">Attempting to modify or close a position that no longer exists.</td>
+  <td style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.5">Check PositionSelect() before operating on a position. Use OnTradeTransaction() to track position closures in real time.</td>
+  
+</tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="padding-top:0">
+  <div class="card" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;background:rgba(212,168,67,0.05);border-color:rgba(212,168,67,0.2)">
+    <div>
+      <div style="font-size:11px;font-weight:700;color:#D4A843;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px">Need expert help?</div>
+      <div style="font-size:18px;font-weight:800;color:#fff">Algo Trading Platform Services</div>
+      <div style="font-size:13px;color:rgba(255,255,255,0.45);margin-top:4px">Architecture review, debugging, and production support</div>
+    </div>
+    <a class="btn-primary" href="https://swifttechco.com/services/finance/trading-platform" target="_blank" rel="noopener">Talk to a specialist &rarr;</a>
+  </div>
+</div>
+
+
+<footer>
+  <p>This page is the open-source data backing the full comparison article.</p>
+  <p style="margin-top:8px">
+    <a href="https://swifttechco.com/services/finance/trading-platform" target="_blank" rel="noopener">Read the full analysis at swifttechco.com &rarr;</a>
+    &nbsp;&nbsp;&middot;&nbsp;&nbsp;
+    <a href="https://swifttechco.com" target="_blank" rel="noopener">Swift Tech Co.</a>
+  </p>
+</footer>
+
+<script>
+let activeCat = "all";
+function rows() { return document.querySelectorAll("#errorBody tr"); }
+function doSearch() {
+  const q = document.getElementById("searchInput").value.toLowerCase();
+  let visible = 0;
+  rows().forEach(r => {
+    const matchCat = activeCat === "all" || r.dataset.cat === activeCat;
+    const matchQ   = !q || r.dataset.search.includes(q);
+    r.style.display = matchCat && matchQ ? "" : "none";
+    if (matchCat && matchQ) visible++;
+  });
+  document.getElementById("countLabel").textContent = visible + " errors";
+}
+function filterCat(btn) {
+  activeCat = btn.dataset.cat;
+  document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  doSearch();
+}
+</script>
+</body>
+</html>
